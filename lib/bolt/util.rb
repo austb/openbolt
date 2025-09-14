@@ -403,6 +403,7 @@ module Bolt
       #   e.g. 'cp <src> <dest>' for `docker cp <src> <dest>`
       # @return [String, String, Process::Status] The output of the command: STDOUT, STDERR, Process Status
       def exec_docker(cmd, env = {})
+        #puts "exec docker #{cmd}"
         Open3.capture3(env, 'docker', *cmd, { binmode: true })
       end
 
@@ -414,7 +415,10 @@ module Bolt
       #   e.g. 'cp <src> <dest>' for `podman cp <src> <dest>`
       # @return [String, String, Process::Status] The output of the command: STDOUT, STDERR, Process Status
       def exec_podman(cmd, env = {})
-        Open3.capture3(env, 'podman', *cmd, { binmode: true })
+        #puts "exec podman #{cmd}"
+        r = Open3.capture3(env, 'podman', *cmd, { binmode: true })
+        #puts "exec podman result #{r}"
+        r
       end
 
       # Formats a map of environment variables to be passed to a command that

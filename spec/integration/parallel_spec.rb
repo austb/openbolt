@@ -262,6 +262,7 @@ Undef:}
                               "exit_code" => 1
                             } } } }] } }]
       result = run_cli_json(%w[plan run parallel::error] + config_flags)
+      puts "result #{result}"
       expect(result).to include(expected_err)
       expect(result['details']).to include(expected_details)
       expect(expected_results - result['details']['results']).to eq([])

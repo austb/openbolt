@@ -39,6 +39,7 @@ module Bolt
         end
 
         def run_cmd(cmd, env_vars)
+          #puts "exec_docker"
           Bolt::Util.exec_docker(cmd, env_vars)
         end
 
@@ -128,7 +129,9 @@ module Bolt
         # @return [Object] Ruby object representation of the JSON string
         def execute_local_json_command(subcommand, arguments = [])
           cmd = [subcommand, '--format', '{{json .}}'].concat(arguments)
+          #puts "local json #{cmd}"
           out, _err, _stat = run_cmd(cmd, env_hash)
+          #puts "out #{out}"
           extract_json(out)
         end
 

@@ -86,6 +86,8 @@ describe 'running with an inventory file', reset_puppet_settings: true do
 
   shared_examples 'basic inventory' do
     it 'connects to run a command' do
+      #puts conn
+
       result = run_one_node(run_command)
       expect(result).to be
     end
@@ -338,8 +340,8 @@ describe 'running with an inventory file', reset_puppet_settings: true do
     include_examples 'basic inventory'
   end
 
-  context 'when running over docker', docker: true do
-    let(:conn) { conn_info('docker') }
+  context 'when running over podman', podman: true do
+    let(:conn) { conn_info('podman') }
     let(:shell_cmd) { "whoami" }
 
     include_examples 'basic inventory'

@@ -9,6 +9,7 @@ module BoltSpec
 
     def run_cli(arguments, rescue_exec: false, outputter: Bolt::Outputter::JSON,
                 project: Bolt::Project.new({}, Dir.mktmpdir))
+      #puts arguments
       cli = Bolt::CLI.new(arguments)
 
       # prevent tests from reading users config

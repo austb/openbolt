@@ -81,7 +81,7 @@ Puppet::Functions.create_function(:run_container) do
     cmd += Shellwords.shellsplit(options[:cmd]) if options[:cmd]
 
     executor.publish_event(type: :container_start, image: image)
-    out, err, status = Bolt::Util.exec_docker(cmd)
+    out, err, status = Bolt::Util.exec_podman(cmd)
 
     o = out.is_a?(String) ? out.dup.force_encoding('utf-8') : out
     e = err.is_a?(String) ? err.dup.force_encoding('utf-8') : err

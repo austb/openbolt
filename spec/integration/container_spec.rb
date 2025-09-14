@@ -16,7 +16,7 @@ describe 'plans', bash: true do
 
   it 'runs a command in a container' do
     result = run_cli_json(%w[plan run container image=hello-world] + mpath)
-    expect(result['value']['stdout']).to include("Hello from Docker!\nThis message shows")
+    expect(result['value']['stdout']).to include("Hello Podman World")
     output = @log_output.readlines
     expect(output).to include(/Starting: run container 'hello-world'/)
     expect(output).to include(/Finished: run container 'hello-world' succeeded./)
@@ -38,7 +38,7 @@ describe 'plans', bash: true do
       users = result.map do |hash|
         hash.dig('value', 'report', 'resource_statuses').keys
       end.flatten
-      expect(users).to eq(["Notify[root\n]", "Notify[root\n]"])
+      expect(users).to eq(["Notify[root\n]"])
     end
   end
 end

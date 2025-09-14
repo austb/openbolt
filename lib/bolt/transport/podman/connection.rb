@@ -37,7 +37,9 @@ module Bolt
         def connect
           # We don't actually have a connection, but we do need to
           # check that the container exists and is running.
+          #puts "Podman ps"
           ps = execute_local_json_command('ps')
+          #puts "ps result #{ps}"
           container = Array(ps).find { |item|
             item["ID"].to_s.eql?(@target.host) ||
               item["Id"].to_s.start_with?(@target.host) ||
@@ -91,10 +93,23 @@ module Bolt
           # appearing in the output before the closing bracket.
           # should we only get a single line with no newline at all, we also
           # assume it is a single minified JSON object
+          #puts "extract_json #{stdout.class}"
           stdout.strip!
           newline = stdout.index("\n") || -1
           bracket = stdout.index('}') || -1
-          JSON.parse(stdout) if bracket > newline
+          #puts "bracket #{bracket} newline #{newline}"
+          begin
+            # The output from the docker format command is a JSON string per line.
+            # We can't do a direct convert but this helper method will convert it into
+            # an array of Objects
+            r = stdout.split("\n")
+              .reject { |str| str.strip.empty? }
+              .map { |str| JSON.parse(str) }
+          rescue => e
+            #puts e
+          end
+          #puts "podman json result #{r}"
+          r
         end
       end
     end

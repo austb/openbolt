@@ -18,6 +18,8 @@ group(:test) do
   gem "mocha", '~> 1.4.0'
   gem "rack-test", '~> 1.0'
   gem 'rspec-github', require: false
+  gem 'ed25519', '~> 1.2'
+  gem 'bcrypt_pbkdf', '~> 1.0'
 end
 
 group(:release, optional: true) do
